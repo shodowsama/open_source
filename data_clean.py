@@ -88,7 +88,6 @@ for file_path , _ , filenames in os.walk(os.path.join('data_trainsform')):
             staff_data = pd.concat([staff_data,data],join='outer',axis=0)
         else:
             data = data_clean(data)
-        print(data.info())
 
         data.to_excel(writer,sheet_name = excel.sheet_names[0],index=False)
         writer.close()         
