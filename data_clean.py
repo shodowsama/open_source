@@ -14,6 +14,21 @@ def simple_cover(df):
     columns = df.iloc[0,:]
     # 資料一致性整理
     if any([x == '年度' for x in columns]): columns.replace('年度','學年度',inplace=True)
+    if any(['_' in x for x in columns]):
+        check_col = ['學年度','設立別','學校類別','學校代碼','學校名稱']
+        temp_cols =[]
+        for col in columns:
+            a = ''
+            for y in check_col:
+                y1 = '_' + y
+                if y1 in col:
+                    a = y
+            if a: 
+                temp_cols.append(a)
+            else:
+                temp_cols.append(col)
+        columns = temp_cols
+
     data.columns = columns
 
     if any([x == '設立別' for x in columns]): data['設立別'] = data['設立別'].replace(establish_change)
@@ -37,7 +52,7 @@ def simple_digit(x):
     except :
         return -1
 
-# 資料表類型轉換
+# 資料類型轉換
 def data_clean(data):
     for column in data.columns :
         if ('代碼' in column)|('名稱' in column):
